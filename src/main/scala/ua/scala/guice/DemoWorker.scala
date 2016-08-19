@@ -1,5 +1,6 @@
 package ua.scala.guice
 
-class DemoWorker extends DemoGuiceInjector {
-  val service = injector.instance[DemoService]
+import com.google.inject.Inject
+
+class DemoWorker @Inject()(val service: DemoService) {
 }
