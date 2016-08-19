@@ -1,20 +1,13 @@
 package ua.scala.guice
 
-import com.google.inject.{Scope, Guice, AbstractModule}
-import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
+import com.google.inject.AbstractModule
+import com.google.inject.name.Names
 import net.codingwell.scalaguice.ScalaModule
 
-trait DemoGuiceModule extends AbstractModule with ScalaModule {
+class DemoGuiceModule extends AbstractModule with ScalaModule {
   override def configure(): Unit = {
-//    bind[DemoService].to[DemoServiceImpl].in(Scope.)
     bind[DemoService].to[DemoServiceImpl]
+    bind[String].annotatedWith(Names.named("color")).toInstance("realColor")
+    bind[DemoContainer.type].toInstance(DemoContainer)
   }
-}
-
-trait DemoGuiceInjector {
-  lazy val injector: ScalaInjector = DemoGuiceInjector.injector
-}
-
-object DemoGuiceInjector {
-  lazy val injector: ScalaInjector = Guice.createInjector(new DemoGuiceModule {})
 }

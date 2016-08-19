@@ -1,17 +1,23 @@
 package ua.scala.guice
 
+import com.google.inject.Guice
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 import org.scalatest.{Matchers, WordSpec}
 
 class DemoWorkerTest extends WordSpec with Matchers {
 
   "DemoWorker" should {
     "override DemoService with TestGuiceModule" in {
-      val worker = new DemoWorker with TestGuiceInjector
+      val injector: ScalaInjector = Guice.createInjector(new TestGuiceModule)
+      val worker = injector.instance[DemoWorker]
       worker.service.get(10) shouldBe "TEST"
+      DemoContainer.color shouldBe "testColor"
     }
     "doesn't override DemoService without TestGuiceModule" in {
-      val worker = new DemoWorker
+      val injector: ScalaInjector = Guice.createInjector(new DemoGuiceModule)
+      val worker = injector.instance[DemoWorker]
       worker.service.get(10) shouldBe "A"
+      DemoContainer.color shouldBe "realColor"
     }
   }
 }
