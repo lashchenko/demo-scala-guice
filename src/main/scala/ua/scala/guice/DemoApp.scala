@@ -1,8 +1,6 @@
 package ua.scala.guice
 
-import ua.scala.guice.InjectorContainer.injector
-
-object DemoApp extends App {
+object DemoApp extends App with DemoGuiceInjector {
   val worker = injector.instance[DemoWorker]
 
   println(worker.service.get(100))
