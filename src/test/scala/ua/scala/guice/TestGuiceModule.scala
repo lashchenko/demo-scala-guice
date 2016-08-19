@@ -8,6 +8,7 @@ class TestGuiceModule extends AbstractModule with ScalaModule {
   override def configure(): Unit = {
     bind[DemoService].to[DemoServiceTest]
     bind[String].annotatedWith(Names.named("color")).toInstance("testColor")
+    bind[String].annotatedWith(Names.named("info")).toInstance("testInfo")
     bind[DemoContainer.type].toInstance(DemoContainer)
   }
 }
